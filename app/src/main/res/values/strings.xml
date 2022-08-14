@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">BeerFind</string>
     <string name="select_a_city_for_beer_prices">Select a City for Beer Prices</string>
+    <string name="slovensky">Slovensky</string>
+    <string name="english">English</string>
+    <string name="language">Language</string>
 </resources>

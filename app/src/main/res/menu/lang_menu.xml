@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<!--<menu-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:icon="@drawable/language_icon">-->
+<!--    <item-->
+<!--        android:id="@+id/lang_en"-->
+<!--        android:icon="@drawable/usa"-->
+<!--        android:title="@string/english"-->
+<!--        />-->
+<!--    <item-->
+<!--        android:id="@+id/lang_sk"-->
+<!--        android:icon="@drawable/slovakia"-->
+<!--        android:title="@string/slovensky"-->
+<!--        />-->
+<!--</menu>-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/language_icon_white"
+        app:showAsAction="ifRoom"
+        android:title="@string/language">
+
+        <menu>
+            <item
+                android:id="@+id/lang_en"
+                android:title="@string/english"
+                app:showAsAction="never"
+                />
+            <item
+                android:id="@+id/lang_sk"
+                android:title="@string/slovensky"
+                app:showAsAction="never"
+                />
+        </menu>
+    </item>
+</menu>

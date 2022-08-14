@@ -41,7 +41,7 @@ class ManagePermissions(private val activity: Activity, private val list: List<S
         val builder = AlertDialog.Builder(activity)
         builder.setTitle("Need permission(s)")
         builder.setMessage("Some permissions are required to do the task.")
-        builder.setPositiveButton("OK", { dialog, which -> requestPermissions() })
+        builder.setPositiveButton("OK") { dialog, which -> requestPermissions() }
         builder.setNeutralButton("Cancel", null)
         val dialog = builder.create()
         dialog.show()

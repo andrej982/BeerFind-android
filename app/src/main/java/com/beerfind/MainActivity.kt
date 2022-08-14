@@ -1,12 +1,14 @@
 package com.beerfind
 
-import android.content.Context
-import android.content.ContextWrapper
+import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -43,10 +45,39 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = viewPagerAdapter
     }
 
-    override fun attachBaseContext(newBase: Context) {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.lang_menu, menu)
+        return true
+    }
 
-        val localeToSwitchTo = Locale("sk")
-        val localeUpdatedContext: ContextWrapper = ContextUtils.updateLocale(newBase, localeToSwitchTo)
-        super.attachBaseContext(localeUpdatedContext)
+    private fun setLocalLanguage(lang_code: String){
+        val locale = Locale(lang_code)
+        Locale.setDefault(locale)
+
+        val config = Configuration()
+        config.locale = locale
+
+        baseContext.resources.updateConfiguration(config, baseContext.resources.displayMetrics)
+
+        val intent = Intent(this, MainActivity::class.java)
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+
+        R.id.lang_en -> {
+            setLocalLanguage("en")
+            true
+        }
+
+        R.id.lang_sk -> {
+            setLocalLanguage("sk")
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 }

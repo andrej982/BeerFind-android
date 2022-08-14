@@ -1,6 +1,7 @@
 package com.beerfind
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,7 @@ import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
 import java.util.*
 
-class ViewPagerAdapter(val context: Context, val listOfImages: List<Image>) : PagerAdapter() {
+class ViewPagerAdapter(private val context: Context, private val listOfImages: List<Image>) : PagerAdapter() {
     // on below line we are creating a method
     // as get count to return the size of the list.
     override fun getCount(): Int {
@@ -43,6 +44,12 @@ class ViewPagerAdapter(val context: Context, val listOfImages: List<Image>) : Pa
         // image resource for image view.
         imageView.setImageResource(listOfImages[position].imageNumber)
         textView.setText(listOfImages[position].imageCaption)
+
+        imageView.setOnClickListener(){
+            val intent = Intent(context, CityDisplayActivity::class.java)
+            intent.putExtra("cityName", listOfImages[position].imageCaption)
+            context.startActivity(intent)
+        }
 
         // on the below line we are adding this
         // item view to the container.

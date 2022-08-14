@@ -8,9 +8,9 @@ class MainActivity : AppCompatActivity() {
 
     // on below line we are creating variable for view pager,
     // viewpager adapter and the image list.
-    lateinit var viewPager: ViewPager
-    lateinit var viewPagerAdapter: ViewPagerAdapter
-    lateinit var listOfImages: MutableList<Image>
+    private lateinit var viewPager: ViewPager
+    private lateinit var viewPagerAdapter: ViewPagerAdapter
+    private lateinit var listOfImages: MutableList<Image>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

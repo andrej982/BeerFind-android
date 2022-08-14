@@ -1,8 +1,12 @@
 package com.beerfind
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,5 +41,12 @@ class MainActivity : AppCompatActivity() {
         // on below line we are setting
         // adapter to our view pager.
         viewPager.adapter = viewPagerAdapter
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+
+        val localeToSwitchTo = Locale("sk")
+        val localeUpdatedContext: ContextWrapper = ContextUtils.updateLocale(newBase, localeToSwitchTo)
+        super.attachBaseContext(localeUpdatedContext)
     }
 }

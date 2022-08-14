@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
 import java.util.*
 
@@ -36,10 +37,12 @@ class ViewPagerAdapter(val context: Context, val listOfImages: List<Image>) : Pa
         // on below line we are initializing
         // our image view with the id.
         val imageView: ImageView = itemView.findViewById<View>(R.id.idIVImage) as ImageView
+        val textView: TextView = itemView.findViewById(R.id.cityName) as TextView
 
         // on below line we are setting
         // image resource for image view.
         imageView.setImageResource(listOfImages[position].imageNumber)
+        textView.setText(listOfImages[position].imageCaption)
 
         // on the below line we are adding this
         // item view to the container.

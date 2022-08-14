@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
     // viewpager adapter and the image list.
     private lateinit var viewPager: ViewPager
     private lateinit var viewPagerAdapter: ViewPagerAdapter
-    private lateinit var listOfImages: MutableList<Image>
+    private lateinit var listOfCities: MutableList<City>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,17 +22,17 @@ class MainActivity : AppCompatActivity() {
 
         // on below line we are initializing
         // our image list and adding data to it.
-        listOfImages = ArrayList()
-        listOfImages.add(Image(R.drawable.brno, "Brno"))
-        listOfImages.add(Image(R.drawable.bratislava, "Bratislava"))
-        listOfImages.add(Image(R.drawable.prague, "Praha"))
-        listOfImages.add(Image(R.drawable.kosice, "Košice"))
-        listOfImages.add(Image(R.drawable.lucenec, "Lučenec"))
-        listOfImages.add(Image(R.drawable.vidina, "Vidiná"))
+        listOfCities = ArrayList()
+        listOfCities.add(City(R.drawable.brno, "Brno", 49.194727, 16.609419, 14.0))
+        listOfCities.add(City(R.drawable.bratislava, "Bratislava", 48.146128, 17.109559, 14.0))
+        listOfCities.add(City(R.drawable.prague, "Praha", 50.084962, 14.421403, 14.0))
+        listOfCities.add(City(R.drawable.kosice, "Košice", 48.720046, 21.258331, 14.5))
+        listOfCities.add(City(R.drawable.lucenec, "Lučenec", 48.329432, 19.663638, 15.0))
+        listOfCities.add(City(R.drawable.vidina, "Vidiná", 48.358428, 19.654713, 16.5))
 
         // on below line we are initializing our view
         // pager adapter and adding image list to it.
-        viewPagerAdapter = ViewPagerAdapter(this@MainActivity, listOfImages)
+        viewPagerAdapter = ViewPagerAdapter(this@MainActivity, listOfCities)
 
         // on below line we are setting
         // adapter to our view pager.

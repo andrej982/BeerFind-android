@@ -11,11 +11,11 @@ import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
 import java.util.*
 
-class ViewPagerAdapter(private val context: Context, private val listOfImages: List<Image>) : PagerAdapter() {
+class ViewPagerAdapter(private val context: Context, private val listOfCities: List<City>) : PagerAdapter() {
     // on below line we are creating a method
     // as get count to return the size of the list.
     override fun getCount(): Int {
-        return listOfImages.size
+        return listOfCities.size
     }
 
     // on below line we are returning the object
@@ -42,13 +42,17 @@ class ViewPagerAdapter(private val context: Context, private val listOfImages: L
 
         // on below line we are setting
         // image resource for image view.
-        imageView.setImageResource(listOfImages[position].imageNumber)
-        textView.setText(listOfImages[position].imageCaption)
+        val currentCity: City = listOfCities[position]
+        imageView.setImageResource(currentCity.imageNumber)
+        textView.setText(currentCity.imageCaption)
 
         // start city display activity on image click
         imageView.setOnClickListener(){
             val intent = Intent(context, CityDisplayActivity::class.java)
-            intent.putExtra("cityName", listOfImages[position].imageCaption)
+            intent.putExtra("cityName", currentCity.imageCaption)
+                .putExtra("latitude", currentCity.latitude)
+                .putExtra("longitude", currentCity.longitude)
+                .putExtra("zoom", currentCity.zoom)
             context.startActivity(intent)
         }
 

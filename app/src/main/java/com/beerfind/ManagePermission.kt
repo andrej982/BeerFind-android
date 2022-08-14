@@ -13,11 +13,8 @@ class ManagePermissions(private val activity: Activity, private val list: List<S
     fun checkPermissions() {
         if (isPermissionsGranted() != PackageManager.PERMISSION_GRANTED) {
             showAlert()
-        } else {
-            Toast.makeText(activity, "Permissions already granted.", Toast.LENGTH_SHORT).show()
         }
     }
-
 
     // Check permissions status
     private fun isPermissionsGranted(): Int {
@@ -30,7 +27,6 @@ class ManagePermissions(private val activity: Activity, private val list: List<S
         return counter
     }
 
-
     // Find the first denied permission
     private fun deniedPermission(): String {
         for (permission in list) {
@@ -39,7 +35,6 @@ class ManagePermissions(private val activity: Activity, private val list: List<S
         }
         return ""
     }
-
 
     // Show alert dialog to request permissions
     private fun showAlert() {
@@ -52,7 +47,6 @@ class ManagePermissions(private val activity: Activity, private val list: List<S
         dialog.show()
     }
 
-
     // Request the permissions at run time
     private fun requestPermissions() {
         val permission = deniedPermission()
@@ -63,7 +57,6 @@ class ManagePermissions(private val activity: Activity, private val list: List<S
             ActivityCompat.requestPermissions(activity, list.toTypedArray(), code)
         }
     }
-
 
     // Process permissions result
     fun processPermissionsResult(requestCode: Int, permissions: Array<String>,

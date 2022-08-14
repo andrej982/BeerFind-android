@@ -8,8 +8,11 @@ class CityDisplayActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_city_display)
+
+        // adds back button on the top
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
         val name = intent.getStringExtra("cityName")
-        val cityNameDisplay: TextView = findViewById(R.id.cityNameDisplay)
-        cityNameDisplay.setText(name)
+        supportActionBar!!.title = name
     }
 }

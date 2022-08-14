@@ -45,6 +45,7 @@ class ViewPagerAdapter(private val context: Context, private val listOfImages: L
         imageView.setImageResource(listOfImages[position].imageNumber)
         textView.setText(listOfImages[position].imageCaption)
 
+        // start city display activity on image click
         imageView.setOnClickListener(){
             val intent = Intent(context, CityDisplayActivity::class.java)
             intent.putExtra("cityName", listOfImages[position].imageCaption)

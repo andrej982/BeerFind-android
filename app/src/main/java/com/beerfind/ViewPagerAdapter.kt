@@ -9,11 +9,11 @@ import android.widget.RelativeLayout
 import androidx.viewpager.widget.PagerAdapter
 import java.util.*
 
-class ViewPagerAdapter(val context: Context, val imageList: List<Int>) : PagerAdapter() {
+class ViewPagerAdapter(val context: Context, val listOfImages: List<Image>) : PagerAdapter() {
     // on below line we are creating a method
     // as get count to return the size of the list.
     override fun getCount(): Int {
-        return imageList.size
+        return listOfImages.size
     }
 
     // on below line we are returning the object
@@ -39,7 +39,7 @@ class ViewPagerAdapter(val context: Context, val imageList: List<Int>) : PagerAd
 
         // on below line we are setting
         // image resource for image view.
-        imageView.setImageResource(imageList.get(position))
+        imageView.setImageResource(listOfImages[position].imageNumber)
 
         // on the below line we are adding this
         // item view to the container.

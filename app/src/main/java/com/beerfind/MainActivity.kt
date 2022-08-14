@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
     // viewpager adapter and the image list.
     lateinit var viewPager: ViewPager
     lateinit var viewPagerAdapter: ViewPagerAdapter
-    lateinit var imageList: List<Int>
+    lateinit var listOfImages: MutableList<Image>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,17 +22,17 @@ class MainActivity : AppCompatActivity() {
 
         // on below line we are initializing
         // our image list and adding data to it.
-        imageList = ArrayList<Int>()
-        imageList = imageList + R.drawable.brno
-        imageList = imageList + R.drawable.bratislava
-        imageList = imageList + R.drawable.prague
-        imageList = imageList + R.drawable.kosice
-        imageList = imageList + R.drawable.lucenec
-        imageList = imageList + R.drawable.vidina
+        listOfImages = ArrayList()
+        listOfImages.add(Image(R.drawable.brno, "Brno"))
+        listOfImages.add(Image(R.drawable.bratislava, "Bratislava"))
+        listOfImages.add(Image(R.drawable.prague, "Praha"))
+        listOfImages.add(Image(R.drawable.kosice, "Košice"))
+        listOfImages.add(Image(R.drawable.lucenec, "Lučenec"))
+        listOfImages.add(Image(R.drawable.vidina, "Vidiná"))
 
         // on below line we are initializing our view
         // pager adapter and adding image list to it.
-        viewPagerAdapter = ViewPagerAdapter(this@MainActivity, imageList)
+        viewPagerAdapter = ViewPagerAdapter(this@MainActivity, listOfImages)
 
         // on below line we are setting
         // adapter to our view pager.

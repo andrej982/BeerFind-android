@@ -52,47 +52,11 @@ class CityDisplayActivity : AppCompatActivity() {
 
         val cityMap: MapView = findViewById(R.id.cityMap)
         cityMap.setTileSource(TileSourceFactory.MAPNIK)
-        cityMap.controller.setZoom(intent.getDoubleExtra("zoom", 0.0));
+        cityMap.controller.setZoom(intent.getDoubleExtra("zoom", 0.0))
         cityMap.setMultiTouchControls(true)
         cityMap.zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
         val mapController: IMapController = cityMap.controller
         val point = GeoPoint(intent.getDoubleExtra("latitude", 0.0), intent.getDoubleExtra("longitude", 0.0))
         mapController.setCenter(point)
-    }
-
-    private fun setLocalLanguage(lang_code: String){
-        val locale = Locale(lang_code)
-        Locale.setDefault(locale)
-
-        val config = android.content.res.Configuration()
-        config.locale = locale
-
-        baseContext.resources.updateConfiguration(config, baseContext.resources.displayMetrics)
-
-        val intent = Intent(this, MainActivity::class.java)
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.lang_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-
-        R.id.lang_en -> {
-            setLocalLanguage("en")
-            true
-        }
-
-        R.id.lang_sk -> {
-            setLocalLanguage("sk")
-            true
-        }
-
-        else -> {
-            super.onOptionsItemSelected(item)
-        }
     }
 }

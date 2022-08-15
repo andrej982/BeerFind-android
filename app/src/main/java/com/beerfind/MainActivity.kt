@@ -29,12 +29,12 @@ class MainActivity : AppCompatActivity() {
         // on below line we are initializing
         // our image list and adding data to it.
         listOfCities = ArrayList()
-        listOfCities.add(City(R.drawable.brno, "Brno", 49.194727, 16.609419, 16.5, brnoPubs))
-        listOfCities.add(City(R.drawable.bratislava, "Bratislava", 48.146128, 17.109559, 16.5, bratislavaPubs))
-        listOfCities.add(City(R.drawable.prague, "Praha", 50.084962, 14.421403, 16.0, null))
-        listOfCities.add(City(R.drawable.kosice, "Košice", 48.720046, 21.258331, 16.5, null))
-        listOfCities.add(City(R.drawable.lucenec, "Lučenec", 48.329432, 19.663638, 15.0, null))
-        listOfCities.add(City(R.drawable.vidina, "Vidiná", 48.358428, 19.654713, 16.5, vidinaPubs))
+        listOfCities.add(City(R.drawable.brno, "Brno", 49.194727, 16.609419, 16.5))
+        listOfCities.add(City(R.drawable.bratislava, "Bratislava", 48.146128, 17.109559, 16.5))
+        listOfCities.add(City(R.drawable.prague, "Praha", 50.084962, 14.421403, 16.0))
+        listOfCities.add(City(R.drawable.kosice, "Košice", 48.720046, 21.258331, 16.5))
+        listOfCities.add(City(R.drawable.lucenec, "Lučenec", 48.329432, 19.663638, 15.0))
+        listOfCities.add(City(R.drawable.vidina, "Vidiná", 48.358428, 19.654713, 16.5))
 
         // on below line we are initializing our view
         // pager adapter and adding image list to it.

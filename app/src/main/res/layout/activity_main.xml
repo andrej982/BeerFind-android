@@ -19,7 +19,7 @@
         android:padding="8dp"
         android:text="@string/select_a_city_for_beer_prices"
         android:textAlignment="center"
-        android:textColor="@color/purple_200"
+        android:textColor="@color/orange_200"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

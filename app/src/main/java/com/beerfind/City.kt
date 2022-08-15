@@ -5,6 +5,5 @@ data class City constructor(
     val imageCaption: String,
     val latitude: Double,
     val longitude: Double,
-    val zoom: Double,
-    val pubs: List<Pub>?
+    val zoom: Double
     )

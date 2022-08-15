@@ -54,8 +54,6 @@ class ViewPagerAdapter(private val context: Context, private val listOfCities: L
                 .putExtra("latitude", currentCity.latitude)
                 .putExtra("longitude", currentCity.longitude)
                 .putExtra("zoom", currentCity.zoom)
-            if (currentCity.pubs != null)
-                intent.putExtra("pubs", currentCity.pubs as Serializable)
             context.startActivity(intent)
         }
 

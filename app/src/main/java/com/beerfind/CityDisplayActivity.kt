@@ -8,17 +8,15 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.accessibility.AccessibilityViewCommand
+import androidx.core.graphics.drawable.toBitmap
 import org.osmdroid.api.IMapController
+import org.osmdroid.bonuspack.clustering.RadiusMarkerClusterer
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
-import org.osmdroid.views.overlay.infowindow.InfoWindow
-import org.osmdroid.views.overlay.infowindow.MarkerInfoWindow
-
 
 class CityDisplayActivity : AppCompatActivity() {
 
@@ -61,18 +59,24 @@ class CityDisplayActivity : AppCompatActivity() {
         val point = GeoPoint(intent.getDoubleExtra("latitude", 0.0), intent.getDoubleExtra("longitude", 0.0))
         mapController.setCenter(point)
 
+        drawPubs(pubsList, cityMap)
+    }
+
+    private fun drawPubs(pubs: List<Pub>, cityMap: MapView) {
         val icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_beer, null)
 
-        if (intent.hasExtra("pubs")) {
-            val pubs = intent.getSerializableExtra("pubs") as List<Pub>
-            for (pub in pubs) {
-                val marker = Marker(cityMap)
-                marker.position = GeoPoint(pub.latitude, pub.longitude)
-                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
-                marker.icon = icon as Drawable
-                marker.title = pub.name
-                cityMap.overlays.add(marker)
-            }
+        for (pub in pubs) {
+            val marker = Marker(cityMap)
+            marker.position = GeoPoint(pub.latitude, pub.longitude)
+            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+            marker.icon = icon as Drawable
+            marker.title = pub.name
+            cityMap.overlays.add(marker)
+        }
+
+        val cluster = RadiusMarkerClusterer(this)
+        if (icon != null) {
+            cluster.setIcon(icon.toBitmap())
         }
     }
 }

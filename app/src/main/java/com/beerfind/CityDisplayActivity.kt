@@ -72,7 +72,7 @@ class CityDisplayActivity : AppCompatActivity() {
 
         // POI = Point Of Interest
         val poiProvider = NominatimPOIProvider("BeerFind_v0.1")
-        val pois = poiProvider.getPOICloseTo(point, "pub", 50, 0.1)
+        val pois = poiProvider.getPOICloseTo(point, "pub", 50, 0.005)
         val cluster = RadiusMarkerClusterer(this)
 
         cluster.setIcon(clusterIcon.toBitmap())

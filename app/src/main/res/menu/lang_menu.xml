@@ -22,19 +22,19 @@
     <item
         android:id="@+id/action_settings"
         android:icon="@drawable/language_icon_white"
-        app:showAsAction="ifRoom"
-        android:title="@string/language">
+        app:showAsAction="always"
+        android:title="">
 
         <menu>
             <item
                 android:id="@+id/lang_en"
                 android:title="@string/english"
-                app:showAsAction="never"
+                android:icon="@drawable/ic_usa"
                 />
             <item
                 android:id="@+id/lang_sk"
                 android:title="@string/slovensky"
-                app:showAsAction="never"
+                android:icon="@drawable/ic_slovakia"
                 />
         </menu>
     </item>

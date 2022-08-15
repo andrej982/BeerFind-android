@@ -2,20 +2,22 @@ package com.beerfind
 
 import android.Manifest
 import android.content.Context
-import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.accessibility.AccessibilityViewCommand
 import org.osmdroid.api.IMapController
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
-import java.util.*
+import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.infowindow.InfoWindow
+import org.osmdroid.views.overlay.infowindow.MarkerInfoWindow
 
 
 class CityDisplayActivity : AppCompatActivity() {
@@ -58,5 +60,19 @@ class CityDisplayActivity : AppCompatActivity() {
         val mapController: IMapController = cityMap.controller
         val point = GeoPoint(intent.getDoubleExtra("latitude", 0.0), intent.getDoubleExtra("longitude", 0.0))
         mapController.setCenter(point)
+
+        val icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_beer, null)
+
+        if (intent.hasExtra("pubs")) {
+            val pubs = intent.getSerializableExtra("pubs") as List<Pub>
+            for (pub in pubs) {
+                val marker = Marker(cityMap)
+                marker.position = GeoPoint(pub.latitude, pub.longitude)
+                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+                marker.icon = icon as Drawable
+                marker.title = pub.name
+                cityMap.overlays.add(marker)
+            }
+        }
     }
 }

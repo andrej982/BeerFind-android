@@ -3,10 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_beer.xml" value="0.33" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.33" />
+        <entry key="app/src/main/res/drawable/ic_slovakia.xml" value="0.172" />
+        <entry key="app/src/main/res/drawable/ic_usa.xml" value="0.172" />
+        <entry key="app/src/main/res/drawable/round_corner.xml" value="0.3295" />
         <entry key="app/src/main/res/font/bitter.xml" value="0.3572916666666667" />
         <entry key="app/src/main/res/layout/activity_city_display.xml" value="0.2689183411714408" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/image_slider_item.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/info_window.xml" value="0.25" />
         <entry key="app/src/main/res/layout/lang_layout.xml" value="0.13296280461735785" />
         <entry key="app/src/main/res/layout/slider_layout.xml" value="0.13381787088499358" />
         <entry key="app/src/main/res/menu/lang_menu.xml" value="0.26849080803762293" />

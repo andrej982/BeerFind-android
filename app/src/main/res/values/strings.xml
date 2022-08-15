@@ -4,4 +4,5 @@
     <string name="slovensky">Slovensky</string>
     <string name="english">English</string>
     <string name="language">Language</string>
+    <string name="address">Address:</string>
 </resources>

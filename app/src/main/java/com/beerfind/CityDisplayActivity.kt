@@ -5,12 +5,15 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import org.osmdroid.api.IMapController
 import org.osmdroid.bonuspack.clustering.RadiusMarkerClusterer
+import org.osmdroid.bonuspack.location.NominatimPOIProvider
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
@@ -26,7 +29,8 @@ class CityDisplayActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_city_display)
-
+        val policy = ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
         val ctx: Context = this.applicationContext
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx))
 
@@ -51,7 +55,7 @@ class CityDisplayActivity : AppCompatActivity() {
         supportActionBar!!.title = cityName
 
         val cityMap: MapView = findViewById(R.id.cityMap)
-        cityMap.setTileSource(TileSourceFactory.MAPNIK)
+        cityMap.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE)
         cityMap.controller.setZoom(intent.getDoubleExtra("zoom", 0.0))
         cityMap.setMultiTouchControls(true)
         cityMap.zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
@@ -59,24 +63,36 @@ class CityDisplayActivity : AppCompatActivity() {
         val point = GeoPoint(intent.getDoubleExtra("latitude", 0.0), intent.getDoubleExtra("longitude", 0.0))
         mapController.setCenter(point)
 
-        drawPubs(pubsList, cityMap)
+        drawPubs(cityMap, point)
     }
 
-    private fun drawPubs(pubs: List<Pub>, cityMap: MapView) {
+    private fun drawPubs(cityMap: MapView, point: GeoPoint) {
         val icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_beer_pin, null)
+        val clusterIcon = ResourcesCompat.getDrawable(resources, R.drawable.ic_beer, null) as Drawable
 
-        for (pub in pubs) {
-            val marker = Marker(cityMap)
-            marker.position = GeoPoint(pub.latitude, pub.longitude)
-            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-            marker.icon = icon as Drawable
-            marker.title = pub.name
-            cityMap.overlays.add(marker)
-        }
-
+        // POI = Point Of Interest
+        val poiProvider = NominatimPOIProvider("BeerFind_v0.1")
+        val pois = poiProvider.getPOICloseTo(point, "pub", 50, 0.1)
         val cluster = RadiusMarkerClusterer(this)
-        if (icon != null) {
-            cluster.setIcon(icon.toBitmap())
+
+        cluster.setIcon(clusterIcon.toBitmap())
+        cluster.textPaint.textSize = 12 * resources.displayMetrics.density
+        cluster.mAnchorV = Marker.ANCHOR_BOTTOM
+        cluster.mTextAnchorU = 0.70f
+        cluster.mTextAnchorV = 0.27f
+        cityMap.overlays.add(cluster)
+
+        if (pois != null) {
+            for (poi in pois) {
+                val marker = Marker(cityMap)
+                marker.position = poi.mLocation
+                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                marker.icon = icon as Drawable
+                marker.title = poi.mType
+                marker.subDescription = poi.mDescription
+
+                cluster.add(marker)
+            }
         }
     }
 }

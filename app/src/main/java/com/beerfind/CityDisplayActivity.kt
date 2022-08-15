@@ -63,12 +63,12 @@ class CityDisplayActivity : AppCompatActivity() {
     }
 
     private fun drawPubs(pubs: List<Pub>, cityMap: MapView) {
-        val icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_beer, null)
+        val icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_beer_pin, null)
 
         for (pub in pubs) {
             val marker = Marker(cityMap)
             marker.position = GeoPoint(pub.latitude, pub.longitude)
-            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
             marker.icon = icon as Drawable
             marker.title = pub.name
             cityMap.overlays.add(marker)

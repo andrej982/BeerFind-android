@@ -4,7 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/ic_beer.xml" value="0.33" />
+        <entry key="app/src/main/res/drawable/ic_beer_pin.xml" value="0.33" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.33" />
+        <entry key="app/src/main/res/drawable/ic_new_beer.xml" value="0.33" />
+        <entry key="app/src/main/res/drawable/ic_new_beer2.xml" value="0.33" />
         <entry key="app/src/main/res/drawable/ic_slovakia.xml" value="0.172" />
         <entry key="app/src/main/res/drawable/ic_usa.xml" value="0.172" />
         <entry key="app/src/main/res/drawable/round_corner.xml" value="0.3295" />

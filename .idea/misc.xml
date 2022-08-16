@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_baseline_coffee_24.xml" value="0.33" />
         <entry key="app/src/main/res/drawable/ic_beer.xml" value="0.33" />
         <entry key="app/src/main/res/drawable/ic_beer_pin.xml" value="0.33" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.33" />

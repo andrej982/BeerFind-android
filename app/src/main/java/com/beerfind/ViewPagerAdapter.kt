@@ -9,8 +9,8 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
-import java.io.Serializable
 import java.util.*
+
 
 class ViewPagerAdapter(private val context: Context, private val listOfCities: List<City>) : PagerAdapter() {
     // on below line we are creating a method
@@ -45,7 +45,7 @@ class ViewPagerAdapter(private val context: Context, private val listOfCities: L
         // image resource for image view.
         val currentCity: City = listOfCities[position]
         imageView.setImageResource(currentCity.imageNumber)
-        textView.setText(currentCity.imageCaption)
+        textView.text = currentCity.imageCaption
 
         // start city display activity on image click
         imageView.setOnClickListener(){

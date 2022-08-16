@@ -21,6 +21,7 @@ import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 
+
 class CityDisplayActivity : AppCompatActivity() {
 
     private val permissionsRequestCode = 123
@@ -69,10 +70,11 @@ class CityDisplayActivity : AppCompatActivity() {
     private fun drawPubs(cityMap: MapView, point: GeoPoint) {
         val icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_beer_pin, null)
         val clusterIcon = ResourcesCompat.getDrawable(resources, R.drawable.ic_beer, null) as Drawable
+        val bundle = Bundle()
 
         // POI = Point Of Interest
         val poiProvider = NominatimPOIProvider("BeerFind_v0.1")
-        val pois = poiProvider.getPOICloseTo(point, "pub", 50, 0.005)
+        val pubPois = poiProvider.getPOICloseTo(point, "pub", 50, 0.005)
         val cluster = RadiusMarkerClusterer(this)
 
         cluster.setIcon(clusterIcon.toBitmap())
@@ -82,17 +84,26 @@ class CityDisplayActivity : AppCompatActivity() {
         cluster.mTextAnchorV = 0.27f
         cityMap.overlays.add(cluster)
 
-        if (pois != null) {
-            for (poi in pois) {
-                val marker = Marker(cityMap)
-                marker.position = poi.mLocation
-                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                marker.icon = icon as Drawable
-                marker.title = poi.mType
-                marker.subDescription = poi.mDescription
-
-                cluster.add(marker)
+        for (poi in pubPois) {
+            val marker = Marker(cityMap)
+            marker.position = poi.mLocation
+            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+            marker.icon = icon as Drawable
+            marker.title = poi.mType
+            marker.subDescription = poi.mDescription
+            marker.setOnMarkerClickListener { _, _ ->
+                bundle.putString("description", marker.subDescription)
+                showDialog(bundle)
             }
+            cluster.add(marker)
         }
+    }
+
+    private fun showDialog(bundle: Bundle): Boolean {
+        val dialog = PubDetailDialog()
+        val transaction = supportFragmentManager.beginTransaction()
+        dialog.arguments = bundle
+        dialog.show(transaction, null)
+        return true
     }
 }

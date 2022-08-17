@@ -28,6 +28,7 @@ class CityDisplayActivity : AppCompatActivity() {
     private lateinit var managePermissions: ManagePermissions
     private lateinit var cluster: RadiusMarkerClusterer
     private lateinit var cityMap: MapView
+    private lateinit var mapController: IMapController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +63,7 @@ class CityDisplayActivity : AppCompatActivity() {
         cityMap.controller.setZoom(intent.getDoubleExtra("zoom", 0.0))
         cityMap.setMultiTouchControls(true)
         cityMap.zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
-        val mapController: IMapController = cityMap.controller
+        mapController = cityMap.controller
         val point = GeoPoint(intent.getDoubleExtra("latitude", 0.0), intent.getDoubleExtra("longitude", 0.0))
         mapController.setCenter(point)
 
@@ -96,6 +97,7 @@ class CityDisplayActivity : AppCompatActivity() {
             marker.subDescription = poi.mDescription
             marker.setOnMarkerClickListener { currentMarker, _ ->
                 currentMarker.icon = iconHighlight
+                mapController.animateTo(currentMarker.position)
                 cityMap.invalidate()
                 bundle.putString("description", currentMarker.subDescription)
                 showDialog(bundle)

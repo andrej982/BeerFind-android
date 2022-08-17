@@ -2,6 +2,7 @@ package com.beerfind
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ class PubDetailWindow : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corner);
+        dialog!!.window?.attributes?.gravity = Gravity.BOTTOM
         return inflater.inflate(R.layout.info_window, container, false)
     }
 

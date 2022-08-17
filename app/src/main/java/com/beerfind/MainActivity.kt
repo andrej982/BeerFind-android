@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 import java.util.*
 
 
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     // viewpager adapter and the image list.
     private lateinit var viewPager: ViewPager
     private lateinit var viewPagerAdapter: ViewPagerAdapter
+    private lateinit var tabLayout: TabLayout
     private lateinit var listOfCities: MutableList<City>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         // initializing variables
         // of below line with their id.
         viewPager = findViewById(R.id.idViewPager)
+        tabLayout = findViewById(R.id.tab_layout)
 
         // on below line we are initializing
         // our image list and adding data to it.
@@ -43,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         // on below line we are setting
         // adapter to our view pager.
         viewPager.adapter = viewPagerAdapter
+        tabLayout.setupWithViewPager(viewPager, true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

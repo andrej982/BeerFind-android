@@ -7,13 +7,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
 
 
-class PubDetailDialog : DialogFragment() {
+class PubDetailWindow : DialogFragment() {
+
+    private lateinit var dialogView: View
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corner);
+        dialogView = inflater.inflate(R.layout.info_window, container, false)
         return inflater.inflate(R.layout.info_window, container, false)
     }
 
@@ -25,11 +27,11 @@ class PubDetailDialog : DialogFragment() {
 
     }
 
-    override fun show(manager: FragmentManager, tag: String?) {
-//        val description = this.arguments?.getString("description") as String
-//        Toast.makeText(context, description, Toast.LENGTH_SHORT).show()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val description = this.arguments?.getString("description") as String
+        Toast.makeText(context, description, Toast.LENGTH_SHORT).show()
 //        val textView: TextView = dialog!!.findViewById(R.id.pub_description)
 //        textView.text = description
-        super.show(manager, tag)
     }
 }

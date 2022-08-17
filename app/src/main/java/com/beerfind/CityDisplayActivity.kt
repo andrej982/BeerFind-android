@@ -69,6 +69,7 @@ class CityDisplayActivity : AppCompatActivity() {
 
     private fun drawPubs(cityMap: MapView, point: GeoPoint) {
         val icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_beer_pin, null)
+        val iconHighlight = ResourcesCompat.getDrawable(resources, R.drawable.ic_beer_pin_focus, null)
         val clusterIcon = ResourcesCompat.getDrawable(resources, R.drawable.ic_beer, null) as Drawable
         val bundle = Bundle()
 
@@ -79,7 +80,7 @@ class CityDisplayActivity : AppCompatActivity() {
 
         cluster.setIcon(clusterIcon.toBitmap())
         cluster.textPaint.textSize = 12 * resources.displayMetrics.density
-        cluster.mAnchorV = Marker.ANCHOR_BOTTOM
+        cluster.mAnchorV = Marker.ANCHOR_CENTER
         cluster.mTextAnchorU = 0.70f
         cluster.mTextAnchorV = 0.27f
         cityMap.overlays.add(cluster)
@@ -91,7 +92,9 @@ class CityDisplayActivity : AppCompatActivity() {
             marker.icon = icon as Drawable
             marker.title = poi.mType
             marker.subDescription = poi.mDescription
-            marker.setOnMarkerClickListener { _, _ ->
+            marker.setOnMarkerClickListener { currentMarker, _ ->
+                currentMarker.icon = iconHighlight
+                cityMap.invalidate()
                 bundle.putString("description", marker.subDescription)
                 showDialog(bundle)
             }
@@ -100,7 +103,7 @@ class CityDisplayActivity : AppCompatActivity() {
     }
 
     private fun showDialog(bundle: Bundle): Boolean {
-        val dialog = PubDetailDialog()
+        val dialog = PubDetailWindow()
         val transaction = supportFragmentManager.beginTransaction()
         dialog.arguments = bundle
         dialog.show(transaction, null)

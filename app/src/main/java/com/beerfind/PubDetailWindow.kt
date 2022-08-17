@@ -13,15 +13,15 @@ import androidx.fragment.app.DialogFragment
 class PubDetailWindow : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corner);
+        dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corner)
         dialog!!.window?.attributes?.gravity = Gravity.BOTTOM
+        dialog!!.window?.attributes?.windowAnimations = R.style.dialog_animation
         return inflater.inflate(R.layout.info_window, container, false)
     }
 
     override fun onStart() {
         super.onStart()
         val width = (resources.displayMetrics.widthPixels * 0.85).toInt()
-        val height = (resources.displayMetrics.heightPixels * 0.40).toInt()
         dialog!!.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 

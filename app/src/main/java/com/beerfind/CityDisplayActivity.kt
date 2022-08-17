@@ -26,6 +26,8 @@ class CityDisplayActivity : AppCompatActivity() {
 
     private val permissionsRequestCode = 123
     private lateinit var managePermissions: ManagePermissions
+    private lateinit var cluster: RadiusMarkerClusterer
+    private lateinit var cityMap: MapView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +57,7 @@ class CityDisplayActivity : AppCompatActivity() {
         val cityName = intent.getStringExtra("cityName")
         supportActionBar!!.title = cityName
 
-        val cityMap: MapView = findViewById(R.id.cityMap)
+        cityMap = findViewById(R.id.cityMap)
         cityMap.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE)
         cityMap.controller.setZoom(intent.getDoubleExtra("zoom", 0.0))
         cityMap.setMultiTouchControls(true)
@@ -76,7 +78,7 @@ class CityDisplayActivity : AppCompatActivity() {
         // POI = Point Of Interest
         val poiProvider = NominatimPOIProvider("BeerFind_v0.1")
         val pubPois = poiProvider.getPOICloseTo(point, "pub", 50, 0.005)
-        val cluster = RadiusMarkerClusterer(this)
+        cluster = RadiusMarkerClusterer(this)
 
         cluster.setIcon(clusterIcon.toBitmap())
         cluster.textPaint.textSize = 12 * resources.displayMetrics.density
@@ -95,11 +97,19 @@ class CityDisplayActivity : AppCompatActivity() {
             marker.setOnMarkerClickListener { currentMarker, _ ->
                 currentMarker.icon = iconHighlight
                 cityMap.invalidate()
-                bundle.putString("description", marker.subDescription)
+                bundle.putString("description", currentMarker.subDescription)
                 showDialog(bundle)
             }
             cluster.add(marker)
         }
+    }
+
+    fun resetIcons(){
+        val icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_beer_pin, null)
+        for (marker in cluster.items) {
+            marker.icon = icon as Drawable
+        }
+        cityMap.invalidate()
     }
 
     private fun showDialog(bundle: Bundle): Boolean {

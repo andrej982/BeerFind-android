@@ -1,5 +1,6 @@
 package com.beerfind
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +17,7 @@ class PubDetailWindow : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corner);
         dialogView = inflater.inflate(R.layout.info_window, container, false)
-        return inflater.inflate(R.layout.info_window, container, false)
+        return dialogView
     }
 
     override fun onStart() {
@@ -31,7 +32,12 @@ class PubDetailWindow : DialogFragment() {
         super.onCreate(savedInstanceState)
         val description = this.arguments?.getString("description") as String
         Toast.makeText(context, description, Toast.LENGTH_SHORT).show()
-//        val textView: TextView = dialog!!.findViewById(R.id.pub_description)
+//        val textView: TextView = dialogView.findViewById(R.id.pub_description)
 //        textView.text = description
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        (activity as CityDisplayActivity).resetIcons()
+        super.onDismiss(dialog)
     }
 }

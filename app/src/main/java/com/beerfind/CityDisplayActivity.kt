@@ -1,9 +1,7 @@
 package com.beerfind
 
-import android.Manifest
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
@@ -24,8 +22,6 @@ import org.osmdroid.views.overlay.Marker
 
 class CityDisplayActivity : AppCompatActivity() {
 
-    private val permissionsRequestCode = 123
-    private lateinit var managePermissions: ManagePermissions
     private lateinit var cluster: RadiusMarkerClusterer
     private lateinit var cityMap: MapView
     private lateinit var mapController: IMapController
@@ -37,21 +33,6 @@ class CityDisplayActivity : AppCompatActivity() {
         StrictMode.setThreadPolicy(policy)
         val ctx: Context = this.applicationContext
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx))
-
-        val permissionList = listOf(
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.INTERNET,
-            Manifest.permission.ACCESS_NETWORK_STATE,
-            Manifest.permission.ACCESS_WIFI_STATE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        )
-
-        // Initialize a new instance of ManagePermissions class and check permissions
-        managePermissions = ManagePermissions(this,permissionList,permissionsRequestCode)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            managePermissions.checkPermissions()
 
         // adds title and back button on the top
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -66,6 +47,13 @@ class CityDisplayActivity : AppCompatActivity() {
         mapController = cityMap.controller
         val point = GeoPoint(intent.getDoubleExtra("latitude", 0.0), intent.getDoubleExtra("longitude", 0.0))
         mapController.setCenter(point)
+        if (intent.hasExtra("isGps")) {
+            val myPin = Marker(cityMap)
+            myPin.position = point
+            myPin.icon = ResourcesCompat.getDrawable(resources, R.drawable.my_pin, null)
+            myPin.title = getString(R.string.my_location)
+            cityMap.overlays.add(myPin)
+        }
 
         drawPubs(cityMap, point)
     }

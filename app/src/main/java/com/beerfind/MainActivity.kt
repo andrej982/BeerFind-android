@@ -1,11 +1,19 @@
 package com.beerfind
 
+import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import java.util.*
@@ -19,6 +27,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewPagerAdapter: ViewPagerAdapter
     private lateinit var tabLayout: TabLayout
     private lateinit var listOfCities: MutableList<City>
+    private lateinit var locationManager: LocationManager
+    // used for permission management
+    private val permissionsRequestCode = 123
+    private lateinit var managePermissions: ManagePermissions
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +60,48 @@ class MainActivity : AppCompatActivity() {
         // adapter to our view pager.
         viewPager.adapter = viewPagerAdapter
         tabLayout.setupWithViewPager(viewPager, true)
+
+        val permissionList = listOf(
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_NETWORK_STATE,
+            Manifest.permission.ACCESS_WIFI_STATE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+
+        // Initialize a new instance of ManagePermissions class and check permissions
+        managePermissions = ManagePermissions(this,permissionList,permissionsRequestCode)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            managePermissions.checkPermissions()
+
+        val locationImage: ImageView = findViewById(R.id.location)
+        locationImage.setOnClickListener {
+            locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            )
+                return@setOnClickListener
+            else {
+                val location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                Toast.makeText(this, location.toString(), Toast.LENGTH_LONG).show()
+                if (location != null) {
+                    val intent = Intent(this, CityDisplayActivity::class.java)
+                    intent.putExtra("cityName", getString(R.string.my_location))
+                        .putExtra("latitude", location.latitude)
+                        .putExtra("longitude", location.longitude)
+                        .putExtra("zoom", 15.0)
+                        .putExtra("isGps", true)
+                    startActivity(intent)
+                }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

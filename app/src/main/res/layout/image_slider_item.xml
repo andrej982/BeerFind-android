@@ -9,13 +9,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/thumbnail_card"
         app:cardCornerRadius="15dp"
-        app:cardElevation="0dp"
-        android:layout_margin="10dp">
+        app:cardElevation="0dp">
     <!--on below line we are creating an image view-->
         <ImageView
             android:id="@+id/idIVImage"
             android:scaleType="fitCenter"
-            android:layout_width="400dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:layout_centerInParent="true"/>
@@ -25,8 +24,9 @@
         android:id="@+id/cityName"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="40sp"
+        android:layout_marginBottom="60dp"
+        android:gravity="bottom|center"
+        android:textSize="32sp"
         android:fontFamily="@font/bitter_pro_bold_italic"
         android:shadowColor="#7F000000"
         android:shadowDx="1"

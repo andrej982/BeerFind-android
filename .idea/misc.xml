@@ -22,6 +22,8 @@
         <entry key="app/src/main/res/font/bitter.xml" value="0.3572916666666667" />
         <entry key="app/src/main/res/layout/activity_city_display.xml" value="0.2689183411714408" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_list.xml" value="0.4232578024796922" />
+        <entry key="app/src/main/res/layout/fragment_map.xml" value="0.4232578024796922" />
         <entry key="app/src/main/res/layout/image_slider_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/info_window.xml" value="0.25" />
         <entry key="app/src/main/res/layout/lang_layout.xml" value="0.13296280461735785" />

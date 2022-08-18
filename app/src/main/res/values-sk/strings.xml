@@ -3,4 +3,6 @@
     <string name="select_a_city_for_beer_prices">Vyber si mesto na zobrazenie cien pivka</string>
     <string name="find_my_location">Nájdi moju polohu</string>
     <string name="my_location">Moja poloha</string>
+    <string name="map">Mapa</string>
+    <string name="list">Zoznam</string>
 </resources>

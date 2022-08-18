@@ -18,6 +18,7 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class CityDisplayActivity : AppCompatActivity() {
@@ -25,6 +26,7 @@ class CityDisplayActivity : AppCompatActivity() {
     private lateinit var cluster: RadiusMarkerClusterer
     private lateinit var cityMap: MapView
     private lateinit var mapController: IMapController
+    private lateinit var bottomNav: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

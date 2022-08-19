@@ -40,6 +40,6 @@ class ListFragment : Fragment() {
             pubs.add(Pub(pubName, pubAddr, distance, requireContext()))
         }
         pubs.sortBy { it.distance }
-        listView.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, pubs.map{it.toString()})
+        listView.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, pubs.map{it.getString()})
     }
 }

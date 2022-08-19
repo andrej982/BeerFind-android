@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.DialogFragment
 
 
@@ -28,7 +29,10 @@ class PubDetailWindow : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val pubDesc: TextView = view.findViewById(R.id.pub_description)
-        pubDesc.text = this.arguments?.getString("description")
+        val pubStr = this.arguments?.getString("description")
+        pubDesc.text = HtmlCompat.fromHtml(
+            "<b>${pubStr?.substringBefore(",")}</b><br>${pubStr?.substringAfter(", ")}",
+            HtmlCompat.FROM_HTML_MODE_LEGACY)
     }
 
     override fun onDismiss(dialog: DialogInterface) {

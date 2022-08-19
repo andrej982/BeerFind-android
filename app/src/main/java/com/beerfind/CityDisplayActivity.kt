@@ -9,6 +9,8 @@ import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.fragment.app.Fragment
+import com.google.android.material.navigation.NavigationBarView
 import org.osmdroid.api.IMapController
 import org.osmdroid.bonuspack.clustering.RadiusMarkerClusterer
 import org.osmdroid.bonuspack.location.NominatimPOIProvider
@@ -18,7 +20,6 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class CityDisplayActivity : AppCompatActivity() {
@@ -26,7 +27,7 @@ class CityDisplayActivity : AppCompatActivity() {
     private lateinit var cluster: RadiusMarkerClusterer
     private lateinit var cityMap: MapView
     private lateinit var mapController: IMapController
-    private lateinit var bottomNav: BottomNavigationView
+    private lateinit var bottomNav: NavigationBarView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +50,9 @@ class CityDisplayActivity : AppCompatActivity() {
         mapController = cityMap.controller
         val point = GeoPoint(intent.getDoubleExtra("latitude", 0.0), intent.getDoubleExtra("longitude", 0.0))
         mapController.setCenter(point)
+
+        drawPubs(cityMap, point)
+
         if (intent.hasExtra("isGps")) {
             val myPin = Marker(cityMap)
             myPin.position = point
@@ -57,7 +61,21 @@ class CityDisplayActivity : AppCompatActivity() {
             cityMap.overlays.add(myPin)
         }
 
-        drawPubs(cityMap, point)
+//        bottomNav = findViewById(R.id.bottomNav)
+//        val listFragment = ListFragment()
+//        loadFragment(MapFragment())
+//        bottomNav.setOnItemReselectedListener {
+//            when (it.itemId) {
+//                R.id.pub_map -> {
+//                    loadFragment(MapFragment())
+//                    return@setOnItemReselectedListener
+//                }
+//                R.id.pub_list -> {
+//                    loadFragment(ListFragment())
+//                    return@setOnItemReselectedListener
+//                }
+//            }
+//        }
     }
 
     private fun drawPubs(cityMap: MapView, point: GeoPoint) {
@@ -110,5 +128,12 @@ class CityDisplayActivity : AppCompatActivity() {
         dialog.arguments = bundle
         dialog.show(transaction, null)
         return true
+    }
+
+    private  fun loadFragment(fragment: Fragment){
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.cityMap,fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.location.Location
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
@@ -15,6 +16,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.viewpager.widget.ViewPager
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.CancellationToken
+import com.google.android.gms.tasks.CancellationTokenSource
+import com.google.android.gms.tasks.OnTokenCanceledListener
 import com.google.android.material.tabs.TabLayout
 import java.util.*
 
@@ -27,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewPagerAdapter: ViewPagerAdapter
     private lateinit var tabLayout: TabLayout
     private lateinit var listOfCities: MutableList<City>
-    private lateinit var locationManager: LocationManager
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     // used for permission management
     private val permissionsRequestCode = 123
     private lateinit var managePermissions: ManagePermissions
@@ -76,9 +83,10 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             managePermissions.checkPermissions()
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val locationImage: ImageView = findViewById(R.id.location)
         locationImage.setOnClickListener {
-            locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
             if (ActivityCompat.checkSelfPermission(
                     this,
                     Manifest.permission.ACCESS_FINE_LOCATION
@@ -86,12 +94,17 @@ class MainActivity : AppCompatActivity() {
                     this,
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED
-            )
+            ) {
                 return@setOnClickListener
-            else {
-                val location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-                Toast.makeText(this, location.toString(), Toast.LENGTH_LONG).show()
-                if (location != null) {
+            }
+            fusedLocationClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
+                override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
+
+                override fun isCancellationRequested() = false
+            }).addOnSuccessListener { location: Location? ->
+                if (location == null)
+                    Toast.makeText(this, "Cannot get location.", Toast.LENGTH_SHORT).show()
+                else {
                     val intent = Intent(this, CityDisplayActivity::class.java)
                     intent.putExtra("cityName", getString(R.string.my_location))
                         .putExtra("latitude", location.latitude)

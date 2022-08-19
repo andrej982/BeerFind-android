@@ -71,7 +71,6 @@ class CityDisplayActivity : AppCompatActivity() {
         val transaction = supportFragmentManager.beginTransaction()
         bundle?.let { fragment.arguments = it }
         transaction.replace(R.id.container,fragment)
-        transaction.addToBackStack(null)
         transaction.commit()
     }
 }

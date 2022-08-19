@@ -38,7 +38,7 @@ class CityDisplayActivity : AppCompatActivity() {
         val cityName = intent.getStringExtra("cityName")
         supportActionBar!!.title = cityName
 
-        val bundle: Bundle? = intent.extras
+        val bundle: Bundle = intent.extras!!
         bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         loadFragment(MapFragment(), bundle)
         bottomNav.setOnItemSelectedListener {
@@ -48,7 +48,7 @@ class CityDisplayActivity : AppCompatActivity() {
                     true
                 }
                 R.id.pub_list -> {
-                    loadFragment(ListFragment(), null)
+                    loadFragment(ListFragment(), bundle)
                     true
                 }
                 else -> {true}
@@ -69,7 +69,7 @@ class CityDisplayActivity : AppCompatActivity() {
 
     private  fun loadFragment(fragment: Fragment, bundle: Bundle?){
         val transaction = supportFragmentManager.beginTransaction()
-        bundle?.let { fragment.arguments = it }
+        fragment.arguments = bundle
         transaction.replace(R.id.container,fragment)
         transaction.commit()
     }

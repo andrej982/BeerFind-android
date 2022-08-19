@@ -5,4 +5,6 @@
     <string name="my_location">Moja poloha</string>
     <string name="map">Mapa</string>
     <string name="list">Zoznam</string>
+    <string name="no_location">Neviem nájsť polohu.</string>
+    <string name="distance">Vzdialenosť:</string>
 </resources>

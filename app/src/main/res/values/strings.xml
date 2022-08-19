@@ -7,4 +7,6 @@
     <string name="my_location">My Location</string>
     <string name="map">Map</string>
     <string name="list">List</string>
+    <string name="no_location">Cannot get location.</string>
+    <string name="distance">Distance:</string>
 </resources>

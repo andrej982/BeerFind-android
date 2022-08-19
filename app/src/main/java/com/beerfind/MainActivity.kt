@@ -50,11 +50,11 @@ class MainActivity : AppCompatActivity() {
         // on below line we are initializing
         // our image list and adding data to it.
         listOfCities = ArrayList()
-        listOfCities.add(City(R.drawable.brno, "Brno", 49.194727, 16.609419, 16.5))
-        listOfCities.add(City(R.drawable.bratislava, "Bratislava", 48.146128, 17.109559, 16.5))
-        listOfCities.add(City(R.drawable.prague, "Praha", 50.084962, 14.421403, 16.0))
-        listOfCities.add(City(R.drawable.kosice, "Košice", 48.720046, 21.258331, 16.5))
-        listOfCities.add(City(R.drawable.lucenec, "Lučenec", 48.329432, 19.663638, 15.0))
+        listOfCities.add(City(R.drawable.brno, "Brno", 49.194727, 16.609419, 17.0))
+        listOfCities.add(City(R.drawable.bratislava, "Bratislava", 48.146128, 17.109559, 17.0))
+        listOfCities.add(City(R.drawable.prague, "Praha", 50.084962, 14.421403, 17.0))
+        listOfCities.add(City(R.drawable.kosice, "Košice", 48.720046, 21.258331, 17.0))
+        listOfCities.add(City(R.drawable.lucenec, "Lučenec", 48.329432, 19.663638, 17.0))
         listOfCities.add(City(R.drawable.vidina, "Vidiná", 48.358428, 19.654713, 16.5))
 
         // on below line we are initializing our view
@@ -101,13 +101,13 @@ class MainActivity : AppCompatActivity() {
                 override fun isCancellationRequested() = false
             }).addOnSuccessListener { location: Location? ->
                 if (location == null)
-                    Toast.makeText(this, "Cannot get location.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.no_location), Toast.LENGTH_SHORT).show()
                 else {
                     val intent = Intent(this, CityDisplayActivity::class.java)
                     intent.putExtra("cityName", getString(R.string.my_location))
                         .putExtra("latitude", location.latitude)
                         .putExtra("longitude", location.longitude)
-                        .putExtra("zoom", 15.0)
+                        .putExtra("zoom", 17.0)
                         .putExtra("isGps", true)
                     startActivity(intent)
                 }

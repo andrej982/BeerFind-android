@@ -1,24 +1,24 @@
 package com.beerfind
 
-import java.io.Serializable
+import android.content.Context
+import kotlin.math.roundToInt
 
-data class Pub constructor(
-    val latitude: Double,
-    val longitude: Double,
-    val prices: Int,
+ data class Pub constructor(
     val name: String,
-    val address: String
-    )
+    val address: String,
+    val distance: Float,
+    val context: Context
+    ) {
 
-val pubsList = listOf(
-//    Brno pubs
-    Pub(49.196813, 16.609236, 2, "Výčep Na Stojáka", "Běhounská 16"),
-    Pub(49.192890, 16.606002, 1, "Pivovarský dům Poupě", "Dominikánská 342"),
-    Pub(49.194351, 16.607244, 3, "Wild Thing Brno", "Zámečnická 8"),
-//    Bratislava pubs
-    Pub(48.144352, 17.114187, 1, "U Zlatého Bažanta", "Dunajská 4"),
-    Pub(48.143787, 17.106876, 2, "Barrock", "Sedlárska 1"),
-    Pub(48.145681, 17.106431, 3, "Channels Club", "Župné námestie 2"),
-//    Vidina pubs
-    Pub(48.355807, 19.657466, 1, "Konkurent", "9. mája 1"),
-)
+    override fun toString(): String {
+        return "$name\n$address\n\n${getDistance(distance)}"
+    }
+
+    private fun getDistance(distance: Float): String {
+        return if (distance > 1000) {
+            "${context.getString(R.string.distance)} ${(distance / 1000).roundToInt()} km"
+        } else {
+            "${context.getString(R.string.distance)} ${(distance / 10).roundToInt() * 10} m"
+        }
+    }
+}

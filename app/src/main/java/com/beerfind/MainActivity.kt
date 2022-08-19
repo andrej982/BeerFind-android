@@ -1,12 +1,10 @@
 package com.beerfind
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.location.Location
-import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -127,8 +125,7 @@ class MainActivity : AppCompatActivity() {
         Locale.setDefault(locale)
 
         val config = Configuration()
-        config.locale = locale
-
+        config.setLocale(locale)
         baseContext.resources.updateConfiguration(config, baseContext.resources.displayMetrics)
 
         val intent = Intent(this, MainActivity::class.java)

@@ -16,7 +16,7 @@ import org.osmdroid.config.Configuration
 
 class CityDisplayActivity : AppCompatActivity() {
 
-    private lateinit var bottomNav: NavigationBarView
+    lateinit var bottomNav: NavigationBarView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,15 +33,27 @@ class CityDisplayActivity : AppCompatActivity() {
 
         val bundle: Bundle = intent.extras!!
         bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        loadFragment(MapFragment(), bundle)
+
+        val mapFragment = MapFragment()
+        val listFragment = ListFragment()
+        var active: Fragment = mapFragment
+        // Initial fragment
+        mapFragment.arguments = bundle
+        listFragment.arguments = bundle
+        val transaction = supportFragmentManager
+        transaction.beginTransaction().add(R.id.container, listFragment, "list").hide(listFragment).commit()
+        transaction.beginTransaction().add(R.id.container, mapFragment, "map").commit()
+
         bottomNav.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.pub_map -> {
-                    loadFragment(MapFragment(), bundle)
+                    transaction.beginTransaction().hide(active).show(mapFragment).commit()
+                    active = mapFragment
                     true
                 }
                 R.id.pub_list -> {
-                    loadFragment(ListFragment(), bundle)
+                    transaction.beginTransaction().hide(active).show(listFragment).commit()
+                    active = listFragment
                     true
                 }
                 else -> {true}
@@ -61,12 +73,5 @@ class CityDisplayActivity : AppCompatActivity() {
         val icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_beer_pin, null)
         selectedMarker.icon = icon as Drawable
         cityMap.invalidate()
-    }
-
-    private  fun loadFragment(fragment: Fragment, bundle: Bundle?){
-        val transaction = supportFragmentManager.beginTransaction()
-        fragment.arguments = bundle
-        transaction.replace(R.id.container,fragment)
-        transaction.commit()
     }
 }

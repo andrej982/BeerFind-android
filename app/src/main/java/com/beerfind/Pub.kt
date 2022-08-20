@@ -1,14 +1,15 @@
 package com.beerfind
 
 import android.content.Context
-import android.text.Spanned
 import androidx.core.text.HtmlCompat
+import org.osmdroid.util.GeoPoint
 import kotlin.math.roundToInt
 
 data class Pub constructor(
     val name: String,
     val address: String,
     val distance: Float,
+    val geoPoint: GeoPoint,
     val context: Context
     ) {
 
@@ -20,8 +21,8 @@ data class Pub constructor(
         }
     }
 
-    fun getString(): Spanned{
+    override fun toString(): String {
         return HtmlCompat.fromHtml("<b>$name</b><br>$address<br><br>${getDistance(distance)}",
-            HtmlCompat.FROM_HTML_MODE_LEGACY)
+            HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
     }
 }

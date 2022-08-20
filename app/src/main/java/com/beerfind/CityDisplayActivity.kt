@@ -57,11 +57,9 @@ class CityDisplayActivity : AppCompatActivity() {
         transitionToast.cancel()
     }
 
-    fun resetIcons(){
+    fun resetIcon(){
         val icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_beer_pin, null)
-        for (marker in cluster.items) {
-            marker.icon = icon as Drawable
-        }
+        selectedMarker.icon = icon as Drawable
         cityMap.invalidate()
     }
 

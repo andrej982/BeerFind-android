@@ -36,7 +36,7 @@ class PubDetailWindow : DialogFragment() {
     }
 
     override fun onDismiss(dialog: DialogInterface) {
-        (activity as CityDisplayActivity).resetIcons()
+        (activity as CityDisplayActivity).resetIcon()
         super.onDismiss(dialog)
     }
 }

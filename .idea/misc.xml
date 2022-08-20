@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../Android/Sdk/platforms/android-32/data/res/layout/simple_list_item_1.xml" value="0.4232578024796922" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.4605" />
         <entry key="app/src/main/res/drawable/default_dot.xml" value="0.4605" />
+        <entry key="app/src/main/res/drawable/ic_baseline_center_focus_strong_24.xml" value="0.2925" />
         <entry key="app/src/main/res/drawable/ic_baseline_coffee_24.xml" value="0.33" />
         <entry key="app/src/main/res/drawable/ic_baseline_map_24.xml" value="0.4605" />
         <entry key="app/src/main/res/drawable/ic_baseline_view_list_24.xml" value="0.4605" />
@@ -24,7 +26,7 @@
         <entry key="app/src/main/res/layout/activity_city_display.xml" value="0.2689183411714408" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_list.xml" value="0.4232578024796922" />
-        <entry key="app/src/main/res/layout/fragment_map.xml" value="0.4232578024796922" />
+        <entry key="app/src/main/res/layout/fragment_map.xml" value="0.33" />
         <entry key="app/src/main/res/layout/image_slider_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/info_window.xml" value="0.25" />
         <entry key="app/src/main/res/layout/lang_layout.xml" value="0.13296280461735785" />

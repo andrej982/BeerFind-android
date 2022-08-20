@@ -10,6 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
-        android:focusable="true" />
+        android:focusable="true" >
+    </org.osmdroid.views.MapView>
+
+    <ImageButton
+        android:id="@+id/centerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:src="@drawable/ic_baseline_center_focus_strong_24"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="10dp"/>
 
 </FrameLayout>

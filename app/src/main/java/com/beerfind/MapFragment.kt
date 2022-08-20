@@ -35,6 +35,8 @@ class MapFragment : Fragment() {
     private lateinit var oldLocation: Location
     private lateinit var centerButton: ImageButton
     private val poiProvider = NominatimPOIProvider("BeerFind_v0.1")
+    private val refreshDelay = 5000
+    private val distanceWalked = 200
     private lateinit var handler: Handler
 
     override fun onCreateView(
@@ -47,7 +49,6 @@ class MapFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val refreshDelay = 5000
         centerButton = requireActivity().findViewById(R.id.centerButton)
         cityMap = requireView().findViewById(R.id.cityMap)
         cityMap.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE)
@@ -104,6 +105,7 @@ class MapFragment : Fragment() {
         cluster.mAnchorV = Marker.ANCHOR_CENTER
         cluster.mTextAnchorU = 0.70f
         cluster.mTextAnchorV = 0.27f
+        cityMap.overlays.clear()
         cityMap.overlays.add(cluster)
 
         for (poi in pubPois) {
@@ -154,7 +156,7 @@ class MapFragment : Fragment() {
             }
             else {
                 marker.position = GeoPoint(location.latitude, location.longitude)
-                if (oldLocation.distanceTo(location) > 100) {
+                if (oldLocation.distanceTo(location) > distanceWalked) {
                     oldLocation = location
                     drawPubs(marker.position)
                 }

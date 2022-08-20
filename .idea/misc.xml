@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.4171195652173913" />
         <entry key="../../Android/Sdk/platforms/android-32/data/res/layout/simple_list_item_1.xml" value="0.4232578024796922" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.4605" />
         <entry key="app/src/main/res/drawable/default_dot.xml" value="0.4605" />

@@ -2,6 +2,9 @@ This is BeerFind Android app
 
 # Changelog
 
+## 0.2.2
+- Added map centering on clicked pub in list
+
 ## 0.2.1
 - Added automatic location refresh every 5 seconds
 - Added automatic pub refresh after walking 200m

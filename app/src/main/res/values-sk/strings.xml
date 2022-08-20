@@ -7,4 +7,5 @@
     <string name="list">Zoznam</string>
     <string name="no_location">Neviem nájsť polohu.</string>
     <string name="distance">Vzdialenosť:</string>
+    <string name="loading">Načítavanie…</string>
 </resources>

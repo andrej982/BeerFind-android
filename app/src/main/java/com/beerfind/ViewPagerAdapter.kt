@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.viewpager.widget.PagerAdapter
 import java.util.*
 
@@ -49,6 +50,8 @@ class ViewPagerAdapter(private val context: Context, private val listOfCities: L
 
         // start city display activity on image click
         imageView.setOnClickListener {
+            transitionToast = Toast.makeText(context, context.getString(R.string.loading), Toast.LENGTH_LONG)
+            transitionToast.show()
             val intent = Intent(context, CityDisplayActivity::class.java)
             intent.putExtra("cityName", currentCity.imageCaption)
                 .putExtra("latitude", currentCity.latitude)

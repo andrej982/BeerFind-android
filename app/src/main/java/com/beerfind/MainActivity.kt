@@ -95,13 +95,17 @@ class MainActivity : AppCompatActivity() {
             ) {
                 return@setOnClickListener
             }
+            transitionToast = Toast.makeText(this, getString(R.string.loading), Toast.LENGTH_LONG)
+            transitionToast.show()
             fusedLocationClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
                 override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
 
                 override fun isCancellationRequested() = false
             }).addOnSuccessListener { location: Location? ->
-                if (location == null)
+                if (location == null) {
+                    transitionToast.cancel()
                     Toast.makeText(this, getString(R.string.no_location), Toast.LENGTH_SHORT).show()
+                }
                 else {
                     val intent = Intent(this, CityDisplayActivity::class.java)
                     intent.putExtra("cityName", getString(R.string.my_location))

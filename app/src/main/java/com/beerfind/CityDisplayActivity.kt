@@ -11,14 +11,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
-import org.osmdroid.api.IMapController
-import org.osmdroid.bonuspack.clustering.RadiusMarkerClusterer
 import org.osmdroid.config.Configuration
-import org.osmdroid.views.MapView
-
-lateinit var cluster: RadiusMarkerClusterer
-lateinit var cityMap: MapView
-lateinit var mapController: IMapController
 
 
 class CityDisplayActivity : AppCompatActivity() {
@@ -57,6 +50,11 @@ class CityDisplayActivity : AppCompatActivity() {
         bottomNav.setOnItemReselectedListener{
             // empty to prevent re-selecting current fragment
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        transitionToast.cancel()
     }
 
     fun resetIcons(){

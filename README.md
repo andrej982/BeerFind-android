@@ -2,6 +2,9 @@ This is BeerFind Android app
 
 # Changelog
 
+## 0.2.4
+- Reworked GPS controller to hopefully show better location
+
 ## 0.2.3
 - Added nicer color to pub list for better readability
 

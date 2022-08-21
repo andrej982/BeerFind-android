@@ -84,38 +84,13 @@ class MainActivity : AppCompatActivity() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val locationImage: ImageView = findViewById(R.id.location)
         locationImage.setOnClickListener {
-
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                return@setOnClickListener
-            }
             transitionToast = Toast.makeText(this, getString(R.string.loading), Toast.LENGTH_LONG)
             transitionToast.show()
-            fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
-                override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
-
-                override fun isCancellationRequested() = false
-            }).addOnSuccessListener { location: Location? ->
-                if (location == null) {
-                    transitionToast.cancel()
-                    Toast.makeText(this, getString(R.string.no_location), Toast.LENGTH_SHORT).show()
-                }
-                else {
-                    val intent = Intent(this, CityDisplayActivity::class.java)
-                    intent.putExtra("cityName", getString(R.string.my_location))
-                        .putExtra("latitude", location.latitude)
-                        .putExtra("longitude", location.longitude)
-                        .putExtra("zoom", 17.0)
-                        .putExtra("isGps", true)
-                    startActivity(intent)
-                }
-            }
+            val intent = Intent(this, CityDisplayActivity::class.java)
+            intent.putExtra("cityName", getString(R.string.my_location))
+                .putExtra("zoom", 17.0)
+                .putExtra("isGps", true)
+            startActivity(intent)
         }
     }
 

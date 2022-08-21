@@ -1,9 +1,6 @@
 package com.beerfind
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
-import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,29 +8,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.Priority
-import com.google.android.gms.tasks.CancellationToken
-import com.google.android.gms.tasks.CancellationTokenSource
-import com.google.android.gms.tasks.OnTokenCanceledListener
 import org.osmdroid.bonuspack.clustering.RadiusMarkerClusterer
 import org.osmdroid.bonuspack.location.NominatimPOIProvider
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
 
 class MapFragment : Fragment() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var oldLocation: Location
+    private lateinit var oldLocation: GeoPoint
     private lateinit var centerButton: ImageButton
     private val poiProvider = NominatimPOIProvider("BeerFind_v0.1")
     private val refreshDelay = 5000
@@ -58,30 +51,36 @@ class MapFragment : Fragment() {
         cityMap.setMultiTouchControls(true)
         cityMap.zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
         mapController = cityMap.controller
-        val point = GeoPoint(bundle.getDouble("latitude"), bundle.getDouble("longitude"))
-        mapController.setCenter(point)
-        drawPubs(point)
 
         if (bundle.getBoolean("isGps", false)) {
-            val myPin = Marker(cityMap)
-            myPin.position = point
-            oldLocation = Location("")
-            oldLocation.latitude = myPin.position.latitude
-            oldLocation.longitude = myPin.position.longitude
-            myPin.icon = ResourcesCompat.getDrawable(resources, R.drawable.my_pin, null)
-            myPin.title = getString(R.string.my_location)
-            cityMap.overlays.add(myPin)
+            myLocationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(context), cityMap)
+            myLocationOverlay!!.enableMyLocation()
+            myLocationOverlay!!.runOnFirstFix {
+                oldLocation = myLocationOverlay!!.myLocation
+                requireActivity().runOnUiThread {
+                    drawPubs(myLocationOverlay!!.myLocation)
+                    cityMap.overlays.add(myLocationOverlay)
+                    mapController.setCenter(myLocationOverlay!!.myLocation)
+                    (requireActivity() as CityDisplayActivity).enableBar()
+                }
+            }
             centerButton.visibility = View.VISIBLE
             centerButton.setOnClickListener {
-                mapController.animateTo(myPin.position)
+                oldLocation = myLocationOverlay!!.myLocation
+                mapController.animateTo(myLocationOverlay!!.myLocation)
             }
             handler = Handler(Looper.getMainLooper())
             handler.postDelayed(object : Runnable {
                 override fun run() {
-                    refresh(myPin)
+                    refresh(myLocationOverlay!!.myLocation)
                     handler.postDelayed(this, refreshDelay.toLong())
                 }
             }, refreshDelay.toLong())
+        }
+        else {
+            val point = GeoPoint(bundle.getDouble("latitude"), bundle.getDouble("longitude"))
+            mapController.setCenter(point)
+            drawPubs(point)
         }
     }
 
@@ -89,6 +88,16 @@ class MapFragment : Fragment() {
         if (::handler.isInitialized)
             handler.removeCallbacksAndMessages(null)
         super.onDestroy()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        myLocationOverlay?.enableMyLocation()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        myLocationOverlay?.disableMyLocation()
     }
 
     private fun drawPubs(point: GeoPoint) {
@@ -136,32 +145,11 @@ class MapFragment : Fragment() {
         return true
     }
 
-    private fun refresh(marker: Marker) {
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
-        }
-        fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
-            override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
-
-            override fun isCancellationRequested() = false
-        }).addOnSuccessListener { location: Location? ->
-            if (location == null) {
-                Toast.makeText(requireContext(), getString(R.string.no_location), Toast.LENGTH_SHORT).show()
-            }
-            else {
-                marker.position = GeoPoint(location.latitude, location.longitude)
-                if (oldLocation.distanceTo(location) > distanceWalked) {
-                    oldLocation = location
-                    drawPubs(marker.position)
-                }
-            }
+    private fun refresh(point: GeoPoint) {
+        if (oldLocation.distanceToAsDouble(point) > distanceWalked) {
+            oldLocation = point
+            drawPubs(point)
+            cityMap.overlays.add(myLocationOverlay)
         }
     }
 }

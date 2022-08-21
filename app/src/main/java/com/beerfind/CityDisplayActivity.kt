@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
+import android.view.View
 import androidx.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -33,6 +34,7 @@ class CityDisplayActivity : AppCompatActivity() {
 
         val bundle: Bundle = intent.extras!!
         bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
+        bottomNav.visibility = View.INVISIBLE
 
         val mapFragment = MapFragment()
         val listFragment = ListFragment()
@@ -73,5 +75,9 @@ class CityDisplayActivity : AppCompatActivity() {
         val icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_beer_pin, null)
         selectedMarker.icon = icon as Drawable
         cityMap.invalidate()
+    }
+
+    fun enableBar(){
+        bottomNav.visibility = View.VISIBLE
     }
 }

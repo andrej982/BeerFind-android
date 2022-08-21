@@ -7,12 +7,12 @@ import kotlin.math.roundToInt
 data class Pub constructor(
     val name: String,
     val address: String,
-    val distance: Float,
+    val distance: Double,
     val geoPoint: GeoPoint,
     val context: Context
     ) {
 
-    private fun getDistance(distance: Float): String {
+    private fun getDistance(distance: Double): String {
         return if (distance > 1000) {
             "${context.getString(R.string.distance)} ${(distance / 1000).roundToInt()} km"
         } else {

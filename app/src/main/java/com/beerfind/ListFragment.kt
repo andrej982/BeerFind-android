@@ -1,7 +1,6 @@
 package com.beerfind
 
 import android.graphics.Typeface
-import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,7 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import org.osmdroid.util.GeoPoint
 
 
 class ListFragment : Fragment() {
@@ -24,23 +24,19 @@ class ListFragment : Fragment() {
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
+        lateinit var point: GeoPoint
 
         if (!hidden) {
             val bundle = this.arguments as Bundle
             val listView = requireView().findViewById(R.id.list_of_pubs) as ListView
             val pubs = ArrayList<Pub>()
-
-            val point = Location("")
-            point.latitude = bundle.getDouble("latitude")
-            point.longitude = bundle.getDouble("longitude")
-
+            point = if (bundle.getBoolean("isGps", false))
+                myLocationOverlay?.myLocation!! else
+                GeoPoint(bundle.getDouble("latitude"), bundle.getDouble("longitude"))
             for (pub in cluster.items) {
                 val pubName = pub.subDescription.substringBefore(",")
                 val pubAddr = pub.subDescription.substringAfter(", ")
-                val pubPosition = Location("")
-                pubPosition.latitude = pub.position.latitude
-                pubPosition.longitude = pub.position.longitude
-                val distance = point.distanceTo(pubPosition)
+                val distance = point.distanceToAsDouble(pub.position)
                 pubs.add(Pub(pubName, pubAddr, distance, pub.position, requireContext()))
             }
             pubs.sortBy { it.distance }

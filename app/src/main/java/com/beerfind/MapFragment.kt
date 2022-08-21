@@ -90,16 +90,6 @@ class MapFragment : Fragment() {
         super.onDestroy()
     }
 
-    override fun onResume() {
-        super.onResume()
-        myLocationOverlay?.enableMyLocation()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        myLocationOverlay?.disableMyLocation()
-    }
-
     private fun drawPubs(point: GeoPoint) {
         val icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_beer_pin, null)
         val iconHighlight = ResourcesCompat.getDrawable(resources, R.drawable.ic_beer_pin_focus, null)

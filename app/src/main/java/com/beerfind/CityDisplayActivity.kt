@@ -34,7 +34,7 @@ class CityDisplayActivity : AppCompatActivity() {
 
         val bundle: Bundle = intent.extras!!
         bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        bottomNav.visibility = View.INVISIBLE
+        bottomNav.visibility = if (intent.hasExtra("isGps")) View.INVISIBLE else View.VISIBLE
 
         val mapFragment = MapFragment()
         val listFragment = ListFragment()

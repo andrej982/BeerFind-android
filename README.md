@@ -2,6 +2,9 @@ This is BeerFind Android app
 
 # Changelog
 
+## 0.2.3
+- Added nicer color to pub list for better readability
+
 ## 0.2.2
 - Added map centering on clicked pub in list
 

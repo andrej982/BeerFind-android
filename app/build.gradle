@@ -49,4 +49,5 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.7.2'
     implementation 'com.github.kenilt:LoopingViewPager:0.3.0'
     implementation 'com.google.android.gms:play-services-location:20.0.0'
+    implementation 'androidx.preference:preference:1.2.0'
 }

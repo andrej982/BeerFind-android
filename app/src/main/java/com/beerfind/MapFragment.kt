@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,8 +17,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.OnTokenCanceledListener
@@ -74,7 +75,7 @@ class MapFragment : Fragment() {
             centerButton.setOnClickListener {
                 mapController.animateTo(myPin.position)
             }
-            handler = Handler()
+            handler = Handler(Looper.getMainLooper())
             handler.postDelayed(object : Runnable {
                 override fun run() {
                     refresh(myPin)
@@ -146,7 +147,7 @@ class MapFragment : Fragment() {
         ) {
             return
         }
-        fusedLocationClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
+        fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
             override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
 
             override fun isCancellationRequested() = false

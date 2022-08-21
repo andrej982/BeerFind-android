@@ -1,7 +1,6 @@
 package com.beerfind
 
 import android.content.Context
-import androidx.core.text.HtmlCompat
 import org.osmdroid.util.GeoPoint
 import kotlin.math.roundToInt
 

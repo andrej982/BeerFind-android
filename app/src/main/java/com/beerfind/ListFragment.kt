@@ -1,5 +1,6 @@
 package com.beerfind
 
+import android.graphics.Typeface
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 
 
@@ -41,7 +44,27 @@ class ListFragment : Fragment() {
                 pubs.add(Pub(pubName, pubAddr, distance, pub.position, requireContext()))
             }
             pubs.sortBy { it.distance }
-            listView.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, pubs)
+            val adapter: ArrayAdapter<Pub> = object : ArrayAdapter<Pub>(
+                requireContext(),
+                android.R.layout.simple_list_item_2,
+                android.R.id.text1,
+                pubs
+            ) {
+                override fun getView(
+                    position: Int,
+                    convertView: View?, parent: ViewGroup
+                ): View {
+                    val view = super.getView(position, convertView, parent)
+                    val text1 = view.findViewById<View>(android.R.id.text1) as TextView
+                    val text2 = view.findViewById<View>(android.R.id.text2) as TextView
+                    text1.text = pubs[position].name
+                    text1.setTextColor(ContextCompat.getColor(requireContext(), R.color.orange_200))
+                    text1.typeface = Typeface.DEFAULT_BOLD
+                    text2.text = pubs[position].toString()
+                    return view
+                }
+            }
+            listView.adapter = adapter
             listView.isClickable = true
             listView.onItemClickListener = OnItemClickListener { _, _, position, _ ->
                 (requireActivity() as CityDisplayActivity).bottomNav.selectedItemId = R.id.pub_map

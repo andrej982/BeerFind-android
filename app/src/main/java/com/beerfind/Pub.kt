@@ -22,7 +22,6 @@ data class Pub constructor(
     }
 
     override fun toString(): String {
-        return HtmlCompat.fromHtml("<b>$name</b><br>$address<br><br>${getDistance(distance)}",
-            HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
+        return "$address\n\n${getDistance(distance)}"
     }
 }

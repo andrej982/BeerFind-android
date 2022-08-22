@@ -16,7 +16,6 @@ class ListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
@@ -44,13 +43,9 @@ class ListFragment : Fragment() {
             pubs.sortBy { it.distance }
             listView.apply {
                 layoutManager = LinearLayoutManager(requireContext())
-                adapter = PubListAdapter(pubs)
+                adapter = PubListAdapter(pubs, requireContext())
             }
             listView.isClickable = true
-//            listView.addOnItemTouchListener({ _, _, position, _ ->
-//                (requireActivity() as CityDisplayActivity).bottomNav.selectedItemId = R.id.pub_map
-//                mapController.animateTo(pubs[position].geoPoint, 19.0, 1000)
-//            })
         }
         super.onHiddenChanged(hidden)
     }

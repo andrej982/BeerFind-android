@@ -9,4 +9,12 @@ class PubRepository(private val pubDao: PubDao) {
     suspend fun addPub(pub: Pub) {
         pubDao.insert(pub)
     }
+
+    suspend fun deleteAll() {
+        pubDao.deleteAll()
+    }
+
+    suspend fun deletePub(name: String, address: String){
+        pubDao.delete(name, address)
+    }
 }

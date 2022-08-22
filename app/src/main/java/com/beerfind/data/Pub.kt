@@ -14,26 +14,36 @@ data class Pub(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @ColumnInfo(name = "name")
-    val name: String,
+    val name: String = "",
     @ColumnInfo(name = "address")
-    val address: String,
+    val address: String = "",
     @Ignore
     val distance: Double,
-    @ColumnInfo(name = "geoPoint")
-    val geoPoint: GeoPoint,
     @Ignore
-    val context: Context
+    val geoPoint: GeoPoint?,
+    @Ignore
+    val context: Context?,
+    @Ignore
+    var isFavourite: Int = 0,
     ) {
+    constructor(id: Int, name: String, address: String): this(id, name, address, 0.0, null, null, 0)
 
     private fun getDistance(distance: Double): String {
         return if (distance > 1000) {
-            "${context.getString(R.string.distance)} ${(distance / 1000).roundToInt()} km"
+            "${context?.getString(R.string.distance)} ${(distance / 1000).roundToInt()} km"
         } else {
-            "${context.getString(R.string.distance)} ${(distance / 10).roundToInt() * 10} m"
+            "${context?.getString(R.string.distance)} ${(distance / 10).roundToInt() * 10} m"
         }
     }
 
     override fun toString(): String {
         return "$address\n\n${getDistance(distance)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        return if (other is Pub)
+            (this.name + this.address) === (other.name + other.address)
+        else
+            super.equals(other)
     }
 }

@@ -2,6 +2,9 @@ This is BeerFind Android app
 
 # Changelog
 
+## 0.2.5
+- Added favourite pubs in pub list
+
 ## 0.2.4
 - Reworked GPS controller to hopefully show better location
 

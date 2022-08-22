@@ -11,12 +11,15 @@ interface PubDao {
     @Update
     suspend fun update(pub: Pub)
 
-    @Delete
-    suspend fun delete(pub: Pub)
+    @Query("DELETE FROM pubs WHERE name = :name AND address = :address")
+    suspend fun delete(name: String, address: String)
 
     @Query("SELECT * from pubs WHERE name = :name")
     fun getItem(name: String): Flow<Pub>
 
     @Query("SELECT * from pubs ORDER BY id ASC")
     fun getItems(): Flow<List<Pub>>
+
+    @Query("DELETE FROM pubs")
+    suspend fun deleteAll()
 }

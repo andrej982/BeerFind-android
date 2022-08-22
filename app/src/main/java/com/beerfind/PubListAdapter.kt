@@ -1,14 +1,16 @@
 package com.beerfind
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.beerfind.data.Pub
 
-class PubListAdapter(private val list: List<Pub>, private val context: Context)
+class PubListAdapter(private var list: List<Pub>, private val context: Context)
     : RecyclerView.Adapter<PubListAdapter.PubViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PubViewHolder {
@@ -23,11 +25,16 @@ class PubListAdapter(private val list: List<Pub>, private val context: Context)
 
     override fun getItemCount(): Int = list.size
 
+    fun setItems(list: List<Pub>){
+        this.list = list
+    }
+
     inner class PubViewHolder(inflater: LayoutInflater, parent: ViewGroup):
         RecyclerView.ViewHolder(inflater.inflate(R.layout.pub_list_item, parent, false)),
         View.OnClickListener {
         private val pubName: TextView = itemView.findViewById(R.id.pub_name)
         private val pubDesc: TextView = itemView.findViewById(R.id.pub_description)
+        private val pubDelim: LinearLayout = itemView.findViewById(R.id.item_pub)
 
         init {
             itemView.setOnClickListener(this)
@@ -36,6 +43,10 @@ class PubListAdapter(private val list: List<Pub>, private val context: Context)
         fun bind(pub: Pub) {
             pubName.text = pub.name
             pubDesc.text = pub.toString()
+            if (pub.isFavourite > 0)
+                pubDelim.background = context.resources.getDrawable(R.drawable.pub_selector)
+            else
+                pubDelim.setBackgroundColor(Color.TRANSPARENT)
         }
 
         override fun onClick(v: View?) {

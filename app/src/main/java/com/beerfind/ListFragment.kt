@@ -11,6 +11,7 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.beerfind.data.Pub
 import org.osmdroid.util.GeoPoint
 
 
@@ -37,7 +38,12 @@ class ListFragment : Fragment() {
                 val pubName = pub.subDescription.substringBefore(",")
                 val pubAddr = pub.subDescription.substringAfter(", ")
                 val distance = point.distanceToAsDouble(pub.position)
-                pubs.add(Pub(pubName, pubAddr, distance, pub.position, requireContext()))
+                pubs.add(Pub(name = pubName,
+                    address = pubAddr,
+                    distance = distance,
+                    geoPoint = pub.position,
+                    context = requireContext())
+                )
             }
             pubs.sortBy { it.distance }
             val adapter: ArrayAdapter<Pub> = object : ArrayAdapter<Pub>(

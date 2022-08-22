@@ -1,14 +1,27 @@
-package com.beerfind
+package com.beerfind.data
 
 import android.content.Context
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
+import com.beerfind.R
 import org.osmdroid.util.GeoPoint
 import kotlin.math.roundToInt
 
-data class Pub constructor(
+@Entity(tableName = "pubs")
+data class Pub(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    @ColumnInfo(name = "name")
     val name: String,
+    @ColumnInfo(name = "address")
     val address: String,
+    @Ignore
     val distance: Double,
+    @ColumnInfo(name = "geoPoint")
     val geoPoint: GeoPoint,
+    @Ignore
     val context: Context
     ) {
 

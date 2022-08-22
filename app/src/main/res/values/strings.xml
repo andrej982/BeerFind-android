@@ -10,4 +10,6 @@
     <string name="no_location">Cannot get location.</string>
     <string name="distance">Distance:</string>
     <string name="loading">Loading…</string>
+    <string name="added_favourites">Added to Favourites:</string>
+    <string name="removed_favourites">Removed from Favourites:</string>
 </resources>

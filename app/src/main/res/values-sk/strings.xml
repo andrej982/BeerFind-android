@@ -8,4 +8,6 @@
     <string name="no_location">Neviem nájsť polohu.</string>
     <string name="distance">Vzdialenosť:</string>
     <string name="loading">Načítavanie…</string>
+    <string name="added_favourites">Pridané do obľúbených:</string>
+    <string name="removed_favourites">Odstránené z obľúbených:</string>
 </resources>

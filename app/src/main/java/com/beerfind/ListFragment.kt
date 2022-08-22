@@ -47,11 +47,25 @@ class ListFragment : Fragment() {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = PubListAdapter(pubs, requireContext())
             }
-            val swipeCallback = object: SwipeCallback(){
+            val swipeCallback = object: SwipeCallback() {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     val position = viewHolder.absoluteAdapterPosition
-                    listView.adapter?.notifyItemChanged(position)
-                    Toast.makeText(requireContext(), pubs[position].name, Toast.LENGTH_SHORT).show()
+                    if (direction == ItemTouchHelper.RIGHT) {
+                        listView.adapter?.notifyItemChanged(position)
+                        Toast.makeText(
+                            requireContext(),
+                            "${getString(R.string.removed_favourites)} ${pubs[position].name}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    if (direction == ItemTouchHelper.LEFT) {
+                        listView.adapter?.notifyItemChanged(position)
+                        Toast.makeText(
+                            requireContext(),
+                            "${getString(R.string.added_favourites)} ${pubs[position].name}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
             val itemTouchHelper = ItemTouchHelper(swipeCallback)

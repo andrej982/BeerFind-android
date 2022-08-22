@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.beerfind.data.Pub
@@ -45,6 +47,15 @@ class ListFragment : Fragment() {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = PubListAdapter(pubs, requireContext())
             }
+            val swipeCallback = object: SwipeCallback(){
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val position = viewHolder.absoluteAdapterPosition
+                    listView.adapter?.notifyItemChanged(position)
+                    Toast.makeText(requireContext(), pubs[position].name, Toast.LENGTH_SHORT).show()
+                }
+            }
+            val itemTouchHelper = ItemTouchHelper(swipeCallback)
+            itemTouchHelper.attachToRecyclerView(listView)
             listView.isClickable = true
         }
         super.onHiddenChanged(hidden)

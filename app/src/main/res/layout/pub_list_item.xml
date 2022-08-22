@@ -16,6 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:paddingStart="16dp"
+        android:textSize="18sp"
+        android:fontFamily="@font/bitter_pro_medium"
         android:textStyle="bold"
         android:textColor="@color/orange_200"/>
 
@@ -24,6 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:fontFamily="@font/bitter_pro_medium"
         android:paddingStart="16dp"/>
 
     <View

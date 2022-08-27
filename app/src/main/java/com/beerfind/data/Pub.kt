@@ -30,7 +30,7 @@ data class Pub(
 
     private fun getDistance(distance: Double): String {
         return if (distance > 1000) {
-            "${context?.getString(R.string.distance)} ${(distance / 1000).roundToInt()} km"
+            "${context?.getString(R.string.distance)} ${(distance / 100).roundToInt() / 10.0} km"
         } else {
             "${context?.getString(R.string.distance)} ${(distance / 10).roundToInt() * 10} m"
         }
@@ -38,12 +38,5 @@ data class Pub(
 
     override fun toString(): String {
         return "$address\n\n${getDistance(distance)}"
-    }
-
-    override fun equals(other: Any?): Boolean {
-        return if (other is Pub)
-            (this.name + this.address) === (other.name + other.address)
-        else
-            super.equals(other)
     }
 }

@@ -35,8 +35,6 @@ class ListFragment : Fragment() {
     override fun onHiddenChanged(hidden: Boolean) {
         lateinit var point: GeoPoint
 
-//        pubViewModel.deleteAll()
-
         if (!hidden) {
 
             val bundle = this.arguments as Bundle

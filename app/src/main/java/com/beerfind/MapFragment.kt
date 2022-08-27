@@ -115,12 +115,14 @@ class MapFragment : Fragment() {
             marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
             marker.icon = icon as Drawable
             marker.title = poi.name
-            marker.subDescription = poi.toString()
+            marker.subDescription = "${poi.vicinity}\n\n${poi.rating} (${poi.userRatingsTotal})"
+            Log.d("debug andrej", poi.toString())
             marker.setOnMarkerClickListener { currentMarker, _ ->
                 currentMarker.icon = iconHighlight
                 selectedMarker = currentMarker
                 mapController.animateTo(currentMarker.position)
                 cityMap.invalidate()
+                bundle.putString("name", currentMarker.title)
                 bundle.putString("description", currentMarker.subDescription)
                 showDialog(bundle)
             }
@@ -129,7 +131,7 @@ class MapFragment : Fragment() {
     }
 
     private fun zoomOnCluster() {
-        Log.d("debug andrej", cluster.bounds.toString())
+//        cityMap.controller.zoomToSpan(cluster.bounds.latitudeSpan, cluster.bounds.longitudeSpanWithDateLine)
         cityMap.zoomToBoundingBox(cluster.bounds, true)
     }
 

@@ -44,8 +44,8 @@ class ListFragment : Fragment() {
                 myLocationOverlay?.myLocation!! else
                 GeoPoint(bundle.getDouble("latitude"), bundle.getDouble("longitude"))
             for (pub in cluster.items) {
-                val pubName = pub.subDescription.substringBefore(",")
-                val pubAddr = pub.subDescription.substringAfter(", ")
+                val pubName = pub.title
+                val pubAddr = pub.subDescription
                 val distance = point.distanceToAsDouble(pub.position)
                 pubs.add(Pub(name = pubName,
                     address = pubAddr,

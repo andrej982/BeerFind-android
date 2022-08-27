@@ -29,9 +29,10 @@ class PubDetailWindow : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val pubDesc: TextView = view.findViewById(R.id.pub_description)
+        val pubName = this.arguments?.getString("name")
         val pubStr = this.arguments?.getString("description")
         pubDesc.text = HtmlCompat.fromHtml(
-            "<b>${pubStr?.substringBefore(",")}</b><br>${pubStr?.substringAfter(", ")}",
+            "<b>$pubName</b><br>${pubStr?.substringBefore("\n")}<br>${pubStr?.substringAfter("\n")}",
             HtmlCompat.FROM_HTML_MODE_LEGACY)
     }
 

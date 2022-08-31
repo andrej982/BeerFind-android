@@ -1,6 +1,7 @@
 package com.beerfind
 
 import android.widget.Toast
+import com.beerfind.data.Pub
 import org.osmdroid.api.IMapController
 import org.osmdroid.bonuspack.clustering.RadiusMarkerClusterer
 import org.osmdroid.views.MapView
@@ -12,4 +13,5 @@ lateinit var cityMap: MapView
 lateinit var mapController: IMapController
 lateinit var transitionToast: Toast
 lateinit var selectedMarker: Marker
+lateinit var pubs: ArrayList<Pub>
 var myLocationOverlay: MyLocationNewOverlay? = null

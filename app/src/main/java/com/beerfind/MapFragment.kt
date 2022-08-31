@@ -68,6 +68,7 @@ class MapFragment : Fragment() {
             centerButton.setOnClickListener {
                 oldLocation = myLocationOverlay!!.myLocation
                 mapController.animateTo(myLocationOverlay!!.myLocation)
+                myLocationOverlay!!.enableFollowLocation()
             }
             handler = Handler(Looper.getMainLooper())
             handler.postDelayed(object : Runnable {
@@ -81,7 +82,7 @@ class MapFragment : Fragment() {
             val point = GeoPoint(bundle.getDouble("latitude"), bundle.getDouble("longitude"))
             drawPubs(point)
             mapController.setCenter(point)
-            zoomOnCluster()
+//            zoomOnCluster()
         }
     }
 
